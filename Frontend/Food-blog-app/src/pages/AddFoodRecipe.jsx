@@ -4,22 +4,51 @@ import { useNavigate } from 'react-router-dom'
 
 export default function AddFoodRecipe() {
     const [recipeData, setRecipeData] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate()
-    const onHandleChange = (e) => {
-        let val = (e.target.name === "ingredients") ? e.target.value.split(",") : (e.target.name === "file") ? e.target.files[0] : e.target.value
-        setRecipeData(pre => ({ ...pre, [e.target.name]: val }))
+  const onHandleChange = (e) => {
+  let val = e.target.value;
+
+  if (e.target.name === "ingredients") {
+    val = val.split(",").map(i => i.trim()).filter(Boolean); // removes empty strings
+  } else if (e.target.name === "file") {
+    val = e.target.files[0];
+  }
+
+  setRecipeData(pre => ({ ...pre, [e.target.name]: val }));
+};
+
+    const onHandleSubmit = async (e) => {
+  e.preventDefault();
+  if (isSubmitting) return;
+
+  const ingredients = recipeData.ingredients;
+  const cleanedIngredients = Array.isArray(ingredients)
+    ? ingredients
+    : ingredients.split(',').map(i => i.trim()).filter(Boolean);
+
+  if (cleanedIngredients.length === 0) {
+    alert("Please enter at least one valid ingredient.");
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  const formData = new FormData();
+  formData.append("title", recipeData.title);
+  formData.append("time", recipeData.time);
+  formData.append("instructions", recipeData.instructions);
+  formData.append("ingredients", cleanedIngredients.join(","));
+  formData.append("file", recipeData.file);
+
+  await axios.post("http://localhost:5000/recipe", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'authorization': 'bearer ' + localStorage.getItem("token")
     }
-      const onHandleSubmit = async (e) => {
-        e.preventDefault()
-        console.log(recipeData)
-        await axios.post("http://localhost:5000/recipe", recipeData,{
-            headers:{
-                'Content-Type':'multipart/form-data',
-                'authorization':'bearer '+localStorage.getItem("token")
-            }
-        })
-            .then(() => navigate("/"))
-    }
+  }).then(() => navigate("/"));
+};
+
     return (
         <>
             <div className='container add-recipe'>
@@ -45,7 +74,7 @@ export default function AddFoodRecipe() {
                         <label>Recipe Image</label>
                         <input type="file" className='input' name="file" onChange={onHandleChange} required></input>
                     </div>
-                    <button type="submit" className='add-rec'>Add Recipe</button>
+                    <button type="submit" disabled={isSubmitting} className='add-rec'>Add Recipe</button>
                 </form>
             </div>
         </>

@@ -1,19 +1,8 @@
 const Recipes = require("../models/recipe");
-const multer = require('multer');
-const path = require('path');
 
-// Multer setup with extension preserved
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/images');
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    const filename = Date.now() + '-' + file.fieldname + ext;
-    cb(null, filename);
-  }
-});
-const upload = multer({ storage: storage });
+// ✅ We no longer need multer or path here
+// const multer = require('multer');
+// const path = require('path');
 
 const getRecipes = async (req, res) => {
   try {
@@ -37,27 +26,30 @@ const getRecipe = async (req, res) => {
 const addRecipe = async (req, res) => {
   try {
     const { title, ingredients, instructions, time } = req.body;
-    if (!title || !ingredients || !instructions) {
-      return res.status(400).json({ message: "Required fields can't be empty" });
+
+    if (!title || !ingredients || !instructions || !req.file) {
+      return res.status(400).json({ message: "All fields and image are required" });
     }
 
-    // Convert ingredients to array if sent as string
-    let ingredientsArr = Array.isArray(ingredients)
+    const ingredientsArr = Array.isArray(ingredients)
       ? ingredients
       : ingredients.split(',').map(i => i.trim());
-
-    if (!req.file) {
-      return res.status(400).json({ message: "Image file is required" });
+    if(!req.file){
+      return res.status(400).json({message:"Image file is required"});
     }
+
+    const imageUrl = req.file?.path;
 
     const newRecipe = await Recipes.create({
       title,
       ingredients: ingredientsArr,
       instructions,
       time,
-      coverImage: req.file.filename,
+      coverImage: imageUrl,  //Cloudinary gives a URL
       createdBy: req.user.id
+      
     });
+        console.log("Uploaded file:", req.file);
     return res.status(201).json(newRecipe);
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
@@ -67,21 +59,21 @@ const addRecipe = async (req, res) => {
 const editRecipe = async (req, res) => {
   try {
     const { title, ingredients, instructions, time } = req.body;
-    let recipe = await Recipes.findById(req.params.id);
+    const recipe = await Recipes.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
-    // Convert ingredients to array if sent as string
-    let ingredientsArr = Array.isArray(ingredients)
+    const ingredientsArr = Array.isArray(ingredients)
       ? ingredients
       : ingredients.split(',').map(i => i.trim());
 
-    let coverImage = req.file?.filename ? req.file.filename : recipe.coverImage;
+    let coverImage = req.file?.path || recipe.coverImage;
 
     const updatedRecipe = await Recipes.findByIdAndUpdate(
       req.params.id,
       { title, ingredients: ingredientsArr, instructions, time, coverImage },
       { new: true }
     );
+
     res.json(updatedRecipe);
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
@@ -97,4 +89,10 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-module.exports = { getRecipes, getRecipe, addRecipe, editRecipe, deleteRecipe, upload };
+module.exports = {
+  getRecipes,
+  getRecipe,
+  addRecipe,
+  editRecipe,
+  deleteRecipe
+};

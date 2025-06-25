@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {getRecipes,getRecipe,addRecipe,editRecipe, deleteRecipe, upload } = require("../controller/recipeController");
+const {getRecipes,getRecipe,addRecipe,editRecipe, deleteRecipe} = require("../controller/recipeController");
 const verifyToken = require("../middleware/auth");
+const upload = require("../middleware/cloudinaryUpload");
+
 
  router.get("/",getRecipes) //get all Recipes
  router.get("/:id",getRecipe) //get recipe by id

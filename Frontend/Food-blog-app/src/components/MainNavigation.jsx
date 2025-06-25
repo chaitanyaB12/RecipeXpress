@@ -7,9 +7,14 @@ import ScrollToTop from './ScrollToTop'
 const MainNavigation = () => {
   return (
     <>
-    <ScrollToTop/>
+    <div className='layout-wrapper'>
+      <ScrollToTop/>
+    </div>
     <Navbar/>
+    <main className='main-content'>
     <Outlet/>
+    </main>
+    
     <Footer/>
     
     </>

@@ -19,7 +19,10 @@ const getAllRecipes=async()=>{
 
 const getMyRecipes=async()=>{
   let user=JSON.parse(localStorage.getItem("user"))
-  let allRecipes=await getAllRecipes()
+  if(!user || !user._id){
+    throw new Response("Unathorized",{status:401})
+  }
+  let allRecipes=await getAllRecipes();
   return allRecipes.filter(item=>item.createdBy===user._id)
 }
 
@@ -32,18 +35,22 @@ const getRecipe = async ({ params }) => {
     const recipeRes = await axios.get(`http://localhost:5000/recipe/${params.id}`);
     const recipe = recipeRes.data;
 
-    console.log("Recipe loaded:", recipe); 
+    if (!recipe.createdBy) return { ...recipe, email: "Anonymous" };
 
-      if (!recipe.createdBy) return recipe; // silent fallback
-
-    const userRes = await axios.get(`http://localhost:5000/user/${recipe.createdBy}`);
-    return { ...recipe, email: userRes.data.email };
+    try {
+      const userRes = await axios.get(`http://localhost:5000/user/${recipe.createdBy}`);
+      return { ...recipe, email: userRes.data?.email || "Anonymous" };
+    } catch (innerErr) {
+      console.warn("User not found:" ,innerErr.message);
+      return { ...recipe, email: "Anonymous" };
+    }
 
   } catch (err) {
     console.error("❌ Error loading recipe details:", err.message);
     throw new Response("Failed to load recipe", { status: 500 });
   }
 };
+
 
 
 const router=createBrowserRouter([
