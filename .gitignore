@@ -9,3 +9,6 @@ backend/.env
 # Optional build artifacts
 dist/
 frontend/dist/
+
+
+Backend/public/images/
