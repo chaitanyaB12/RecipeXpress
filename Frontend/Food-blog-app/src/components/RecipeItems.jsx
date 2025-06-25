@@ -7,8 +7,13 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import axios from 'axios';
 
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+
 export default function RecipeItems() {
     const recipes = useLoaderData()
+    console.log("recipes from loader:", recipes);
     const [allRecipes, setAllRecipes] = useState()
     let path = window.location.pathname === "/myRecipe" ? true : false
     let favItems = JSON.parse(localStorage.getItem("fav")) ?? []
@@ -16,12 +21,17 @@ export default function RecipeItems() {
     const navigate=useNavigate()
     console.log(allRecipes)
 
-    useEffect(() => {
-        setAllRecipes(recipes)
-    }, [recipes])
+   useEffect(() => {
+  if (Array.isArray(recipes)) {
+    setAllRecipes(recipes);
+  } else {
+    console.error("Expected recipes to be an array but got:", recipes);
+    setAllRecipes([]); // fail-safe to avoid crashing
+  }
+}, [recipes]);
 
     const onDelete = async (id) => {
-        await axios.delete(`http://localhost:5000/recipe/${id}`)
+        await axios.delete(`${BASE_URL}/recipe/${id}`)
             .then((res) => console.log(res))
         setAllRecipes(recipes => recipes.filter(recipe => recipe._id !== id))
         let filterItem = favItems.filter(recipe => recipe._id !== id)
@@ -43,7 +53,7 @@ export default function RecipeItems() {
                     allRecipes?.map((item, index) => {
                         return (
                             <div key={index} className='card'onClick={()=>navigate(`/recipe/${item._id}`)}>
-                                <img src={item.coverImage?.startsWith("http")? item.coverImage : `http://localhost:5000/images/${item.coverImage}`} width="120px" height="100px" className='card-img'></img>
+                                <img src={item.coverImage?.startsWith("http")? item.coverImage : `${BASE_URL}/images/${item.coverImage}`} width="120px" height="100px" className='card-img'></img>
                                 <div className='card-body'>
                                     <div className='title'>{item.title}</div>
                                     <div className='icons'>

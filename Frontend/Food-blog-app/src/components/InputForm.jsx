@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log("BASE_URL:", BASE_URL);
 const InputForm = ({setIsOpen,setToken, setUser, setIsLogin}) => {
 
     const[email,setEmail]=useState("")
@@ -10,9 +13,9 @@ const InputForm = ({setIsOpen,setToken, setUser, setIsLogin}) => {
 
    const handleOnSubmit = async (e) => {
     e.preventDefault();
-    let endpoint = isSignUp ? "SignUp" : "login";
+    let endpoint = isSignUp ? "signUp" : "login";
     try {
-        const res = await axios.post(`http://localhost:5000/user/${endpoint}`, { email, password });
+        const res = await axios.post(`${BASE_URL}/user/${endpoint}`, { email, password });
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         setIsOpen();
@@ -31,7 +34,7 @@ setIsLogin(false);
     <form className='form'  onSubmit={handleOnSubmit}>
         <div className='form-control'>
             <label>Email</label>
-            <input type="email" className='input' onChange={(e)=>setEmail(e.target.value)} required />
+            <input type="email" className='input' onChange={(e)=>setEmail(e.target.value.trim())} required />
         </div>
           <div className='form-control'>
             <label>Password</label>

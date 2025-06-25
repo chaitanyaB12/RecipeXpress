@@ -8,23 +8,40 @@ import  AddFoodRecipe  from './pages/AddFoodRecipe'
 import EditRecipe from './pages/EditRecipe'
 import RecipeDetails from './pages/RecipeDetails'
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log("BASE_URL:", BASE_URL);
 
-const getAllRecipes=async()=>{
-  let allRecipes=[]
-  await axios.get('http://localhost:5000/recipe').then(res=>{
-    allRecipes=res.data
-  })
-  return allRecipes
-}
-
-const getMyRecipes=async()=>{
-  let user=JSON.parse(localStorage.getItem("user"))
-  if(!user || !user._id){
-    throw new Response("Unathorized",{status:401})
+const getAllRecipes = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/recipe`);
+    const data = res.data;
+    if (Array.isArray(data)) {
+      return data;
+    } else {
+      console.error("Invalid response:", data);
+      return []; // fallback
+    }
+  } catch (err) {
+    console.error("Failed to fetch recipes:", err.message);
+    return []; // fallback
   }
-  let allRecipes=await getAllRecipes();
-  return allRecipes.filter(item=>item.createdBy===user._id)
-}
+};
+
+const getMyRecipes = async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user._id) {
+    throw new Response("Unauthorized", { status: 401 });
+  }
+
+  const allRecipes = await getAllRecipes();
+  if (!Array.isArray(allRecipes)) {
+    console.error("Expected array, got:", allRecipes);
+    return [];
+  }
+
+  return allRecipes.filter(item => item.createdBy === user._id);
+};
+
 
 const getFavRecipes=()=>{
   return JSON.parse(localStorage.getItem("fav"))
@@ -32,13 +49,13 @@ const getFavRecipes=()=>{
 
 const getRecipe = async ({ params }) => {
   try {
-    const recipeRes = await axios.get(`http://localhost:5000/recipe/${params.id}`);
+    const recipeRes = await axios.get(`${BASE_URL}/recipe/${params.id}`);
     const recipe = recipeRes.data;
 
     if (!recipe.createdBy) return { ...recipe, email: "Anonymous" };
 
     try {
-      const userRes = await axios.get(`http://localhost:5000/user/${recipe.createdBy}`);
+      const userRes = await axios.get(`${BASE_URL}/user/${recipe.createdBy}`);
       return { ...recipe, email: userRes.data?.email || "Anonymous" };
     } catch (innerErr) {
       console.warn("User not found:" ,innerErr.message);

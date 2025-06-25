@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export default function AddFoodRecipe() {
     const [recipeData, setRecipeData] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -41,7 +43,7 @@ export default function AddFoodRecipe() {
   formData.append("ingredients", cleanedIngredients.join(","));
   formData.append("file", recipeData.file);
 
-  await axios.post("http://localhost:5000/recipe", formData, {
+  await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       'authorization': 'bearer ' + localStorage.getItem("token")
