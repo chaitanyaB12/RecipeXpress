@@ -12,7 +12,7 @@
 - Axios
 - CSS (Custom styling)
 
-### 🔹 Backend:
+ 🔹 Backend:
 - Node.js
 - Express.js
 - MongoDB (Atlas)
