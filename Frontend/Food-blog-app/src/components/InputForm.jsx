@@ -42,7 +42,7 @@ setIsLogin(false);
         </div>
         <button type='submit'className='logindata' >{(isSignUp) ? "Sign Up" : "Login"}</button> <br /> <br />
        {(error != "") && <h6 className='error'>{error}</h6>} <br /> <br />
-        <p onClick={()=>setIsSignUp(pre=>!pre)}>{(isSignUp) ? "Already have an account": "Create new account"}</p>
+        <p className='signlogin' onClick={()=>setIsSignUp(pre=>!pre)}>{(isSignUp) ? "Already have an account": "Create new account"}</p>
     </form>
     </>
   )

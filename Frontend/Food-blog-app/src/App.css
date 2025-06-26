@@ -202,7 +202,7 @@ section {
   position: fixed;
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
-  background: #fcb21ebe;
+  background: #f2efea;
   padding: 2rem;
   border-radius: 6px;
   z-index: 10;
@@ -301,6 +301,34 @@ button.add-rec {
   gap: 1.5rem;
 }
 
+ .form .logindata{
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  color: #000000;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  background-color: #f3b654;
+  border: none;
+  cursor: pointer;
+}
+ .form .logindata:hover{
+  color: rgb(149, 67, 72);
+  background-color: rgb(224, 237, 249);
+}
+
+.form .signlogin{
+  display: flex;
+  align-self: center;
+  cursor: pointer;
+}
+
+.form .signlogin:hover{
+ color: rgb(25, 183, 169);
+}
+
 /* Align form controls uniformly */
 .form-control {
   display: flex;
@@ -332,16 +360,15 @@ button.add-rec {
 }
 
 /* addrecipe button share your recipe */
-.home-button, .editback-button{
-   align-self: flex-start;
+.home-button, .editback-button, .black-button{
+  align-self: flex-start;
   background-color: #f8641a;
   color: white;
-  padding: 6px 16px;
+  padding: 6px 15px;
   border: none;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
-  margin-bottom: -0.5rem;
 }
 /* Back button aligned to top-left */
 .back-button {
