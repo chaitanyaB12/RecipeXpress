@@ -32,53 +32,36 @@
 ## ✨ Features
 
 - 🔐 **Authentication**
+- 
   - Sign Up / Login (JWT-based)
+  - 
   - Profile dropdown with logout
 - 📸 **Image Upload**
+- 
   - Upload recipe image via Cloudinary
+  - 
 - 📄 **Recipe Management**
+- 
   - Add new recipes with title, time, ingredients, instructions, and image
+  - 
   - Edit or delete your own recipes
+ 
   - View details of each recipe
+  - 
 - ❤️ **Favorites**
+- 
   - Mark/unmark recipes as favorites (frontend logic)
+  - 
 - 🔍 **Responsive Design**
+- 
   - Fully responsive cards, navbar, and dropdowns across devices
+  - 
   - Background image with CSS wave and overlay
 
 ---
 
-## 📁 Project Structure
-
-RecipeXpress/
-├── Backend/
-│ ├── controller/
-│ │ └── recipeController.js
-│ ├── middleware/
-│ │ ├── auth.js
-│ │ └── cloudinaryUpload.js
-│ ├── models/
-│ │ └── recipe.js
-│ ├── routes/
-│ │ ├── recipeRoutes.js
-│ │ └── userRoutes.js
-│ └── index.js
-│
-├── Frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── Navbar.jsx
-│ │ │ ├── Modal.jsx
-│ │ │ └── InputForm.jsx
-│ │ ├── pages/
-│ │ │ ├── AddFoodRecipe.jsx
-│ │ │ ├── EditRecipe.jsx
-│ │ │ ├── RecipeDetails.jsx
-│ │ └── App.jsx
-│ ├── public/
-│ │ └── kitchen.jpg
-│ └── App.css
-
+📁 Project Structure
+<pre lang="text"><code> RecipeXpress/ ├── Backend/ │ ├── controller/ │ │ └── recipeController.js │ ├── middleware/ │ │ ├── auth.js │ │ └── cloudinaryUpload.js │ ├── models/ │ │ └── recipe.js │ ├── routes/ │ │ ├── recipeRoutes.js │ │ └── userRoutes.js │ └── index.js │ ├── Frontend/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.jsx │ │ │ ├── Modal.jsx │ │ │ └── InputForm.jsx │ │ ├── pages/ │ │ │ ├── AddFoodRecipe.jsx │ │ │ ├── EditRecipe.jsx │ │ │ └── RecipeDetails.jsx │ │ └── App.jsx │ ├── public/ │ │ └── kitchen.jpg │ └── App.css </code></pre>
 
 ---
 
@@ -91,12 +74,13 @@ cd Frontend
 npm install
 npm run dev
 
-###🔹 Backend (Express)
+###🔹Backend (Express)
 
 cd Backend
 npm install
 npm start
 
+---
 🚀 Deployment
 # Frontend (Vercel):
 Connect GitHub repo to Vercel
@@ -111,7 +95,7 @@ Create a Web Service
 
 Connect to GitHub repo
 
---Set environment variables:
+----Set environment variables:
 
 PORT
 
@@ -125,7 +109,7 @@ CLOUDINARY_API_KEY
 
 CLOUDINARY_API_SECRET
 
---Set deployment as Manual Deploy (optional)
+----Set deployment as Manual Deploy (optional)
 
 Click “Deploy latest commit” after push
 
