@@ -106,14 +106,23 @@ Set environment variable: VITE_BASE_URL=https://recipexpress.onrender.com
 Vercel will auto-deploy on every push to main
 
 # Backend (Render):
+
 Create a Web Service
+
 Connect to GitHub repo
+
 --Set environment variables:
+
 PORT
+
 MONGODB_URI
+
 SECRET_KEY
+
 CLOUDINARY_CLOUD_NAME
+
 CLOUDINARY_API_KEY
+
 CLOUDINARY_API_SECRET
 
 --Set deployment as Manual Deploy (optional)
@@ -121,16 +130,19 @@ CLOUDINARY_API_SECRET
 Click “Deploy latest commit” after push
 
 📸 Screenshots
-🏠 
+🏠 ![Alt Text](https://github.com/chaitanyaB12/RecipeXpress/blob/781951b41248063c5d12fdb3fe41a7268aa2241a/ScreenShots/Home.png)
 Features background, wave, and call-to-action with Share Recipe button.
 
 🔐 Auth Modal
+ ![Alt Text](https://github.com/chaitanyaB12/RecipeXpress/blob/781951b41248063c5d12fdb3fe41a7268aa2241a/ScreenShots/SignUp.png)
 Login / Sign Up with toggle and inline error display.
 
 🧾 Add/Edit Recipe
+![Alt Text](https://github.com/chaitanyaB12/RecipeXpress/blob/781951b41248063c5d12fdb3fe41a7268aa2241a/ScreenShots/Add%20New%20and%20Edit%20page.png)
 Responsive form with consistent input alignment and image upload.
 
 📄 Recipe Cards
+![Alt Text](https://github.com/chaitanyaB12/RecipeXpress/blob/781951b41248063c5d12fdb3fe41a7268aa2241a/ScreenShots/RecipeCards.png)
 Uniform card layout with image, title, time, and icons.
 
 🙋‍♂️ Author
