@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 app.use(express.static("public"))
  
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
 
 app.use("/user",require("./routes/userRoutes"))
 app.use("/recipe",require("./routes/recipeRoutes"))
