@@ -67,7 +67,7 @@ export default function EditRecipe() {
         <>
         <div className='container'>
             <form className='form' onSubmit={onHandleSubmit}>
-                 <button onClick={()=>navigate(-1)} className='editback-button'>←Back</button>
+                 <button type='button' onClick={()=>navigate(-1)} className='editback-button'>←Back</button>
                 <div className='form-control'>
                     <label>Title</label>
                     <input type="text" className='input' name="title" onChange={onHandleChange} value={recipeData.title} required/>

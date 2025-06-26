@@ -43,19 +43,20 @@ export default function AddFoodRecipe() {
   formData.append("ingredients", cleanedIngredients.join(","));
   formData.append("file", recipeData.file);
 
+
   await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      // 'Content-Type': 'multipart/form-data',
       'authorization': 'bearer ' + localStorage.getItem("token")
     }
   }).then(() => navigate("/"));
-};
+  }
 
     return (
         <>
             <div className='container add-recipe'>
              <form className='form' onSubmit={onHandleSubmit}>
-                <button onClick={()=>navigate(-1)} className='home-button'>←Back</button>
+                <button type='button' onClick={()=>navigate(-1)} className='home-button'>←Back</button>
                     <div className='form-control'>
                         <label>Title</label>
                         <input type="text" className='input' name="title" onChange={onHandleChange} required></input>
