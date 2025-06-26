@@ -32,30 +32,18 @@
 ## ✨ Features
 
 - 🔐 **Authentication**
-- 
   - Sign Up / Login (JWT-based)
-  - 
   - Profile dropdown with logout
 - 📸 **Image Upload**
-- 
   - Upload recipe image via Cloudinary
-  - 
 - 📄 **Recipe Management**
-- 
   - Add new recipes with title, time, ingredients, instructions, and image
-  - 
   - Edit or delete your own recipes
- 
   - View details of each recipe
-  - 
 - ❤️ **Favorites**
-- 
   - Mark/unmark recipes as favorites (frontend logic)
-  - 
 - 🔍 **Responsive Design**
-- 
   - Fully responsive cards, navbar, and dropdowns across devices
-  - 
   - Background image with CSS wave and overlay
 
 ---
