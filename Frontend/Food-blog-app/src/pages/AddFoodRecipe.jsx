@@ -46,7 +46,7 @@ export default function AddFoodRecipe() {
 
   await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
-      // 'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data',
       'authorization': 'bearer ' + localStorage.getItem("token")
     }
   }).then(() => navigate("/"));
