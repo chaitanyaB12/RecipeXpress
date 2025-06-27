@@ -12,9 +12,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: "https://recipe-xpress.vercel.app",
+  origin: [
+    "http://localhost:5173",
+    "https://recipe-xpress.vercel.app",
+    "https://recipe-xpress-81zcy9c5z-chaitanyas-projects-7e70116a.vercel.app" // add preview too
+  ],
   credentials: true,
 }));
+
 app.use(express.static("public"))
  
 app.get("/", (req, res) => {

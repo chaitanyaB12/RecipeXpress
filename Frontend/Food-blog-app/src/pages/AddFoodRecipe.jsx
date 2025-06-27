@@ -21,7 +21,7 @@ export default function AddFoodRecipe() {
   setRecipeData(pre => ({ ...pre, [e.target.name]: val }));
 };
 
-    const onHandleSubmit = async (e) => {
+const onHandleSubmit = async (e) => {
   e.preventDefault();
   if (isSubmitting) return;
 
@@ -35,6 +35,11 @@ export default function AddFoodRecipe() {
     return;
   }
 
+  if (!recipeData.file) {
+    alert("Please upload a recipe image.");
+    return;
+  }
+
   setIsSubmitting(true);
 
   const formData = new FormData();
@@ -44,24 +49,24 @@ export default function AddFoodRecipe() {
   formData.append("ingredients", cleanedIngredients.join(","));
   formData.append("file", recipeData.file);
 
-console.log("Submitting data:");
-for (let pair of formData.entries()) {
-  console.log(`${pair[0]}:`, pair[1]);
-}
+  console.log("Submitting data:");
+  for (let pair of formData.entries()) {
+    console.log(`${pair[0]}:`, pair[1]);
+  }
 
   await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
       'authorization': 'bearer ' + localStorage.getItem("token")
     }
-  }).then(() => navigate("/"))
-    .catch((err) => {
-      console.error("Recipe submission failed:", err);
-      alert("Something went wrong while adding your recipe.");
-    });
+  })
+  .then(() => navigate("/"))
+  .catch((err) => {
+    console.error("Recipe submission failed:", err);
+    alert("Something went wrong while adding your recipe.");
+    setIsSubmitting(false);
+  });
+};
 
-  
-  }
-  
 
     return (
         <>

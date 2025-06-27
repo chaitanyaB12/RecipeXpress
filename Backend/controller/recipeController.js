@@ -24,8 +24,6 @@ const getRecipe = async (req, res) => {
 };
 
 const addRecipe = async (req, res) => {
-  console.log(req.body);
-  console.log("req.file:", req.file);
   try {
     const { title, ingredients, instructions, time } = req.body;
 
@@ -56,6 +54,7 @@ const addRecipe = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
   }
+  
 };
 
 const editRecipe = async (req, res) => {
