@@ -49,7 +49,7 @@
 ---
 
 ```📁 Project Structure
-<pre lang="text"><code> RecipeXpress/ ├── Backend/ │ ├── controller/ │ │ └── recipeController.js │ ├── middleware/ │ │ ├── auth.js │ │ └── cloudinaryUpload.js │ ├── models/ │ │ └── recipe.js │ ├── routes/ │ │ ├── recipeRoutes.js │ │ └── userRoutes.js │ └── index.js │ ├── Frontend/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.jsx │ │ │ ├── Modal.jsx │ │ │ └── InputForm.jsx │ │ ├── pages/ │ │ │ ├── AddFoodRecipe.jsx │ │ │ ├── EditRecipe.jsx │ │ │ └── RecipeDetails.jsx │ │ └── App.jsx │ ├── public/ │ │ └── kitchen.jpg │ └── App.css </code></pre>
+RecipeXpress/ ├── Backend/ │ ├── controller/ │ │ └── recipeController.js │ ├── middleware/ │ │ ├── auth.js │ │ └── cloudinaryUpload.js │ ├── models/ │ │ └── recipe.js │ ├── routes/ │ │ ├── recipeRoutes.js │ │ └── userRoutes.js │ └── index.js │ ├── Frontend/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.jsx │ │ │ ├── Modal.jsx │ │ │ └── InputForm.jsx │ │ ├── pages/ │ │ │ ├── AddFoodRecipe.jsx │ │ │ ├── EditRecipe.jsx │ │ │ └── RecipeDetails.jsx │ │ └── App.jsx │ ├── public/ │ │ └── kitchen.jpg │ └── App.css
 ```
 ---
 
