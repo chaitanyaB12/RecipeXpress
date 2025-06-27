@@ -29,33 +29,90 @@ export default function AddFoodRecipe() {
         setRecipeData(pre => ({ ...pre, [e.target.name]: val }));
     };
 
+    // Add API connection test function
+    const testAPIConnection = async () => {
+        try {
+            console.log('=== TESTING API CONNECTION ===');
+            console.log('🔍 BASE_URL:', BASE_URL);
+            console.log('🔍 Token:', localStorage.getItem("token"));
+            
+            // Test basic connectivity - try to get recipes
+            const response = await axios.get(`${BASE_URL}/recipe`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                },
+                timeout: 10000
+            });
+            
+            console.log('✅ API Connection Test - Status:', response.status);
+            console.log('✅ API Connection Test - Response:', response.data);
+            alert('API connection successful!');
+            
+        } catch (error) {
+            console.error('❌ API Connection Test Failed:', error);
+            if (error.response) {
+                console.error('❌ Response status:', error.response.status);
+                console.error('❌ Response data:', error.response.data);
+                alert(`API connection failed: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`);
+            } else if (error.request) {
+                console.error('❌ No response received:', error.request);
+                alert('Network error: Cannot reach the server');
+            } else {
+                console.error('❌ Request setup error:', error.message);
+                alert(`Connection error: ${error.message}`);
+            }
+        }
+    };
+
     const onHandleSubmit = async (e) => {
         e.preventDefault();
         if (isSubmitting) return;
 
-        // Debug logging
-        console.log("🔍 BASE_URL:", BASE_URL);
-        console.log("🔍 Token:", localStorage.getItem("token"));
-        console.log("🔍 User:", localStorage.getItem("user"));
+        console.log("=== DEBUGGING RECIPE SUBMISSION ===");
+        
+        // Enhanced debugging
+        console.log("🔍 Environment Check:");
+        console.log("  BASE_URL:", BASE_URL);
+        console.log("  Token exists:", !!localStorage.getItem("token"));
+        console.log("  Token length:", localStorage.getItem("token")?.length || 0);
+        console.log("  User data:", localStorage.getItem("user"));
+
+        console.log("🔍 Form Data Check:");
+        console.log("  Title:", recipeData.title);
+        console.log("  Time:", recipeData.time);
+        console.log("  Ingredients:", recipeData.ingredients);
+        console.log("  Instructions:", recipeData.instructions);
+        console.log("  File:", recipeData.file?.name, recipeData.file?.size, recipeData.file?.type);
 
         // Validation
         if (!recipeData.title?.trim()) {
+            console.error("❌ Validation failed: Missing title");
             alert("Please enter a recipe title.");
             return;
         }
 
         if (!recipeData.instructions?.trim()) {
+            console.error("❌ Validation failed: Missing instructions");
             alert("Please enter cooking instructions.");
             return;
         }
 
         if (!recipeData.ingredients?.trim()) {
+            console.error("❌ Validation failed: Missing ingredients");
             alert("Please enter ingredients.");
             return;
         }
 
         if (!recipeData.file) {
+            console.error("❌ Validation failed: Missing file");
             alert("Please upload a recipe image.");
+            return;
+        }
+
+        // Check file size (optional)
+        if (recipeData.file.size > 5 * 1024 * 1024) { // 5MB limit
+            console.error("❌ File too large:", recipeData.file.size);
+            alert("File size too large. Please choose an image smaller than 5MB.");
             return;
         }
 
@@ -66,9 +123,12 @@ export default function AddFoodRecipe() {
             .filter(Boolean);
 
         if (cleanedIngredients.length === 0) {
+            console.error("❌ Validation failed: No valid ingredients");
             alert("Please enter at least one valid ingredient.");
             return;
         }
+
+        console.log("✅ Validation passed. Processed ingredients:", cleanedIngredients);
 
         setIsSubmitting(true);
 
@@ -80,47 +140,105 @@ export default function AddFoodRecipe() {
             formData.append("ingredients", cleanedIngredients.join(","));
             formData.append("file", recipeData.file);
 
-            console.log("📤 Submitting to:", `${BASE_URL}/recipe`);
-            console.log("📤 FormData contents:");
+            console.log("📤 FormData being sent:");
             for (let pair of formData.entries()) {
-                console.log(`  ${pair[0]}:`, pair[1]);
+                if (pair[0] === 'file') {
+                    console.log(`  ${pair[0]}:`, {
+                        name: pair[1].name,
+                        size: pair[1].size,
+                        type: pair[1].type
+                    });
+                } else {
+                    console.log(`  ${pair[0]}:`, pair[1]);
+                }
             }
+
+            console.log("📤 Request details:");
+            console.log("  URL:", `${BASE_URL}/recipe`);
+            console.log("  Method: POST");
+            console.log("  Content-Type: multipart/form-data");
+            console.log("  Authorization: Bearer " + (localStorage.getItem("token") ? "[TOKEN_PRESENT]" : "[NO_TOKEN]"));
 
             const response = await axios.post(`${BASE_URL}/recipe`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + localStorage.getItem("token")
                 },
-                timeout: 60000 // 60 seconds timeout for Render free tier
+                timeout: 60000, // 60 seconds timeout for Render free tier
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    console.log(`📤 Upload progress: ${percentCompleted}%`);
+                }
             });
 
-            console.log("✅ Recipe added successfully:", response.data);
+            console.log("✅ SUCCESS! Recipe added:");
+            console.log("  Status:", response.status);
+            console.log("  Response data:", response.data);
+            console.log("  Response headers:", response.headers);
+            
             alert("Recipe added successfully!");
             navigate("/");
 
         } catch (err) {
+            console.log("=== ERROR ANALYSIS ===");
             console.error("❌ Recipe submission failed:", err);
             
-            // Better error handling
+            // Comprehensive error analysis
             if (err.response) {
-                console.error("❌ Response data:", err.response.data);
-                console.error("❌ Response status:", err.response.status);
-                console.error("❌ Response headers:", err.response.headers);
+                console.error("❌ Server responded with error:");
+                console.error("  Status:", err.response.status);
+                console.error("  Status Text:", err.response.statusText);
+                console.error("  Data:", err.response.data);
+                console.error("  Headers:", err.response.headers);
                 
-                if (err.response.status === 401) {
-                    alert("Please log in to add recipes.");
-                } else if (err.response.status === 400) {
-                    alert(err.response.data.message || "Invalid data provided.");
-                } else {
-                    alert(`Error: ${err.response.data.message || 'Something went wrong'}`);
+                // Specific error handling
+                switch (err.response.status) {
+                    case 400:
+                        console.error("❌ Bad Request - Check your data format");
+                        alert(`Bad Request: ${err.response.data?.message || 'Invalid data provided'}`);
+                        break;
+                    case 401:
+                        console.error("❌ Unauthorized - Check your token");
+                        alert("Please log in to add recipes.");
+                        break;
+                    case 403:
+                        console.error("❌ Forbidden - Token might be expired");
+                        alert("Access denied. Please log in again.");
+                        break;
+                    case 413:
+                        console.error("❌ Payload too large - File might be too big");
+                        alert("File too large. Please choose a smaller image.");
+                        break;
+                    case 500:
+                        console.error("❌ Internal Server Error - Backend issue");
+                        alert("Server error. Please try again later.");
+                        break;
+                    default:
+                        alert(`Error ${err.response.status}: ${err.response.data?.message || 'Something went wrong'}`);
                 }
             } else if (err.request) {
-                console.error("❌ Request made but no response:", err.request);
-                alert("Network error. Please check your connection and backend server.");
+                console.error("❌ Network Error - No response received:");
+                console.error("  Request:", err.request);
+                console.error("  This usually means:");
+                console.error("    - Server is down");
+                console.error("    - Network connectivity issues");
+                console.error("    - CORS issues");
+                console.error("    - Wrong BASE_URL");
+                alert("Network error. Please check your connection and try again.");
             } else {
-                console.error("❌ Error setting up request:", err.message);
-                alert("Something went wrong while adding your recipe.");
+                console.error("❌ Request Setup Error:");
+                console.error("  Message:", err.message);
+                console.error("  Code:", err.code);
+                alert(`Request error: ${err.message}`);
             }
+
+            // Additional debugging info
+            console.log("🔍 Additional Debug Info:");
+            console.log("  Current URL:", window.location.href);
+            console.log("  BASE_URL configured:", BASE_URL);
+            console.log("  Token length:", localStorage.getItem("token")?.length || 0);
+            console.log("  Browser:", navigator.userAgent);
+            
         } finally {
             setIsSubmitting(false);
         }
@@ -131,6 +249,16 @@ export default function AddFoodRecipe() {
             <div className='container add-recipe'>
                 <form className='form' onSubmit={onHandleSubmit}>
                     <button type='button' onClick={() => navigate(-1)} className='home-button'>←Back</button>
+                    
+                    {/* Add test button temporarily */}
+                    <button 
+                        type='button' 
+                        onClick={testAPIConnection}
+                        className='home-button'
+                        style={{marginLeft: '10px', backgroundColor: '#007bff'}}
+                    >
+                        Test API
+                    </button>
                     
                     <div className='form-control'>
                         <label>Title *</label>
