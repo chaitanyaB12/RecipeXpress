@@ -48,9 +48,9 @@
 
 ---
 
-📁 Project Structure
+```📁 Project Structure
 <pre lang="text"><code> RecipeXpress/ ├── Backend/ │ ├── controller/ │ │ └── recipeController.js │ ├── middleware/ │ │ ├── auth.js │ │ └── cloudinaryUpload.js │ ├── models/ │ │ └── recipe.js │ ├── routes/ │ │ ├── recipeRoutes.js │ │ └── userRoutes.js │ └── index.js │ ├── Frontend/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.jsx │ │ │ ├── Modal.jsx │ │ │ └── InputForm.jsx │ │ ├── pages/ │ │ │ ├── AddFoodRecipe.jsx │ │ │ ├── EditRecipe.jsx │ │ │ └── RecipeDetails.jsx │ │ └── App.jsx │ ├── public/ │ │ └── kitchen.jpg │ └── App.css </code></pre>
-
+```
 ---
 
 ## 🧪 Local Development Setup
@@ -118,6 +118,8 @@ Responsive form with consistent input alignment and image upload.
 ![Alt Text](https://github.com/chaitanyaB12/RecipeXpress/blob/781951b41248063c5d12fdb3fe41a7268aa2241a/ScreenShots/RecipeCards.png)
 Uniform card layout with image, title, time, and icons.
 
-🙋‍♂️ Author
-Made with ❤️ by Chaitanya
+## 👨‍💻 Author
+
+### 💖 Made with love by **Chaitanya**
+
 
