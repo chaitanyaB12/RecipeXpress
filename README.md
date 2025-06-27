@@ -49,7 +49,60 @@
 ---
 
 ```📁 Project Structure
-RecipeXpress/ ├── Backend/ │ ├── controller/ │ │ └── recipeController.js │ ├── middleware/ │ │ ├── auth.js │ │ └── cloudinaryUpload.js │ ├── models/ │ │ └── recipe.js │ ├── routes/ │ │ ├── recipeRoutes.js │ │ └── userRoutes.js │ └── index.js │ ├── Frontend/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.jsx │ │ │ ├── Modal.jsx │ │ │ └── InputForm.jsx │ │ ├── pages/ │ │ │ ├── AddFoodRecipe.jsx │ │ │ ├── EditRecipe.jsx │ │ │ └── RecipeDetails.jsx │ │ └── App.jsx │ ├── public/ │ │ └── kitchen.jpg │ └── App.css
+RecipeXpress/
+├── Backend/
+│   ├── config/
+│   │   └── connectiondb.js
+│   ├── controller/
+│   │   ├── recipeController.js
+│   │   └── userController.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   └── cloudinaryUpload.js
+│   ├── models/
+│   │   ├── recipe.js
+│   │   └── user.js
+│   ├── routes/
+│   │   ├── recipeRoutes.js
+│   │   └── userRoutes.js
+│   ├── utils/
+│   │   └── cloudinary.js
+│   └── index.js
+
+├── Frontend/
+│   ├── public/
+│   │   ├── kitchen.jpg
+│   │   └── vite.svg
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── InputForm.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── MainNavigation.jsx
+│   │   │   ├── ScrollToTop.jsx
+│   │   │   └── RecipeItems.jsx
+│   │   ├── pages/
+│   │   │   ├── AddFoodRecipe.jsx
+│   │   │   ├── EditRecipe.jsx
+│   │   │   ├── Home.jsx
+│   │   │   └── RecipeDetails.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── App.css
+│   └── vite.config.js
+
+├── ScreenShots/
+│   ├── Home.png
+│   ├── SignUp.png
+│   ├── Add New and Edit page.png
+│   └── RecipeCards.png
+
+├── .gitignore
+├── package.json
+├── README.md
+
+
 ```
 ---
 
