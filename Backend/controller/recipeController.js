@@ -1,6 +1,6 @@
 const Recipes = require("../models/recipe");
 
-// ✅ We no longer need multer or path here
+//  We no longer need multer or path here
 // const multer = require('multer');
 // const path = require('path');
 
@@ -24,6 +24,8 @@ const getRecipe = async (req, res) => {
 };
 
 const addRecipe = async (req, res) => {
+  console.log(req.body);
+  console.log("req.file:", req.file);
   try {
     const { title, ingredients, instructions, time } = req.body;
 

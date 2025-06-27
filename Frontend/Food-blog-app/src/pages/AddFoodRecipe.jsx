@@ -44,6 +44,10 @@ export default function AddFoodRecipe() {
   formData.append("ingredients", cleanedIngredients.join(","));
   formData.append("file", recipeData.file);
 
+console.log("Submitting data:");
+for (let pair of formData.entries()) {
+  console.log(`${pair[0]}:`, pair[1]);
+}
 
   await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
