@@ -71,9 +71,10 @@ npm start
 ---
 🚀 Deployment
 # Frontend (Vercel):
+
 Connect GitHub repo to Vercel
 
-Set environment variable: VITE_BASE_URL=https://recipexpress.onrender.com
+Set environment variable
 
 Vercel will auto-deploy on every push to main
 
@@ -83,7 +84,7 @@ Create a Web Service
 
 Connect to GitHub repo
 
-----Set environment variables:
+Set environment variables
 
 PORT
 
