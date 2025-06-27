@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function AddFoodRecipe() {
+  
     const [recipeData, setRecipeData] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate()
@@ -46,11 +47,17 @@ export default function AddFoodRecipe() {
 
   await axios.post(`${BASE_URL}/recipe`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       'authorization': 'bearer ' + localStorage.getItem("token")
     }
-  }).then(() => navigate("/"));
+  }).then(() => navigate("/"))
+    .catch((err) => {
+      console.error("Recipe submission failed:", err);
+      alert("Something went wrong while adding your recipe.");
+    });
+
+  
   }
+  
 
     return (
         <>
