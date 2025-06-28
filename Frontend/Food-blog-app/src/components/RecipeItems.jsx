@@ -13,13 +13,13 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function RecipeItems() {
     const recipes = useLoaderData()
-    console.log("recipes from loader:", recipes);
+    // console.log("recipes from loader:", recipes);
     const [allRecipes, setAllRecipes] = useState()
     let path = window.location.pathname === "/myRecipe" ? true : false
     let favItems = JSON.parse(localStorage.getItem("fav")) ?? []
     const [isFavRecipe, setIsFavRecipe] = useState(false)
     const navigate=useNavigate()
-    console.log(allRecipes)
+    // console.log(allRecipes)
 
    useEffect(() => {
   if (Array.isArray(recipes)) {

@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-console.log("BASE_URL:", BASE_URL);
+// console.log("BASE_URL:", BASE_URL);
 
 export default function RecipeDetails() {
     const recipe=useLoaderData()

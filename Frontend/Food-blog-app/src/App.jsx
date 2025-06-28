@@ -9,7 +9,6 @@ import EditRecipe from './pages/EditRecipe'
 import RecipeDetails from './pages/RecipeDetails'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-console.log("BASE_URL:", BASE_URL);
 
 const getAllRecipes = async () => {
   try {
