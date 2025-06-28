@@ -28,9 +28,19 @@ const addRecipe = async (req, res) => {
 
   try {
 
-      console.log("🛠️ Incoming request body:", req.body);
-      console.log("🧾 Uploaded file:", req.file);
-      console.log("👤 Authenticated user:", JSON.stringify(req.user, null, 2));
+    console.log("=== BACKEND DEBUGGING ===");
+    console.log("🛠️ Headers:", req.headers);
+    console.log("🛠️ Content-Type:", req.headers['content-type']);
+    console.log("🛠️ Incoming request body:", req.body);
+    console.log("🧾 Uploaded file:", req.file);
+    console.log("🧾 File details:", {
+      fieldname: req.file?.fieldname,
+      originalname: req.file?.originalname,
+      mimetype: req.file?.mimetype,
+      size: req.file?.size,
+      path: req.file?.path // This should be the Cloudinary URL
+    });
+    console.log("👤 Authenticated user:", JSON.stringify(req.user, null, 2));
     const { title, ingredients, instructions, time } = req.body;
 
     if (!title || !ingredients || !instructions || !req.file) {
